@@ -3,6 +3,7 @@
 import json
 from multiprocessing.connection import Client
 
+
 class RPCProxy(object):
 
     def __init__(self, connection):
@@ -14,6 +15,7 @@ class RPCProxy(object):
             result = json.loads(self._connection.recv())
             return result
         return do_rpc
+
 
 if __name__ == '__main__':
     c = Client(('localhost', 17000), authkey=b'hello')

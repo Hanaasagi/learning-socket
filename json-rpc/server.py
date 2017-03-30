@@ -4,6 +4,7 @@ import json
 from multiprocessing.connection import Listener
 from threading import Thread
 
+
 class RPCHandler(object):
 
     def __init__(self):
@@ -19,7 +20,7 @@ class RPCHandler(object):
                 func_name, args, kwargs = json.loads(connection.recv())
                 # Run the RPC and send a response
                 try:
-                    r = self._functions[func_name](*args,**kwargs)
+                    r = self._functions[func_name](*args, **kwargs)
                     connection.send(json.dumps(r))
                 except Exception as e:
                     connection.send(json.dumps(str(e)))
@@ -43,10 +44,10 @@ def add(x, y):
 def sub(x, y):
     return x - y
 
+
 if __name__ == '__main__':
     handler = RPCHandler()
     handler.register_function(add)
     handler.register_function(sub)
 
     rpc_server(handler, ('localhost', 17000), authkey=b'hello')
-
